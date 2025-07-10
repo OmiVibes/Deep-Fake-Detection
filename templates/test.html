@@ -1,0 +1,305 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Deep Fake Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&family=Roboto:wght@400;500;700&display=swap" rel="stylesheet">
+    <style>
+    /* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
+    background-color: #fff;
+    color: #333;
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+    line-height: 1.6;
+    overflow: hidden;  /* Prevent scrolling */
+}
+
+.container {
+    display: flex;
+    flex-direction: column;
+    justify-content: space-between;
+    flex-grow: 1;
+    max-width: 1200px;
+    margin: 0 auto;
+    padding: 20px;
+}
+
+/* Header Section */
+header {
+    margin-bottom: 20px;
+    text-align: center;
+    position: relative;
+}
+
+h1 {
+    font-size: 48px;
+    color: #000;
+    font-family: 'Poppins', sans-serif;
+    font-weight: 700;
+    letter-spacing: 2px;
+    text-transform: uppercase;
+    margin-bottom: 20px;
+}
+
+.sub-heading {
+    font-size: 18px;
+    color: #7f8c8d;
+    margin-top: 10px;
+    font-family: 'Roboto', sans-serif;
+}
+
+/* Main content split into left and right sections */
+.main-content {
+    display: flex;
+    justify-content: space-between;
+    width: 100%;
+    gap: 20px;
+    flex-wrap: wrap;
+    align-items: flex-start;
+    margin-bottom: 30px; /* Ensure no scrolling */
+}
+
+.left-section {
+    flex: 1;
+    background-color: #f5f5f5;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 550px;
+    text-align: left;
+    height: auto;
+}
+
+h2 {
+    font-size: 28px;
+    color: #333;
+    font-family: 'Poppins', sans-serif;
+    margin-bottom: 20px;
+    font-weight: bold;
+}
+
+p {
+    font-size: 18px;
+    line-height: 1.6;
+    color: #555;
+    margin-bottom: 20px;
+}
+
+.feature-list ul {
+    list-style: disc;
+    padding-left: 20px;
+    font-size: 16px;
+    line-height: 1.8;
+}
+
+.feature-list li {
+    margin-bottom: 15px;
+    font-family: 'Roboto', sans-serif;
+    color: #555;
+}
+
+.right-section {
+    flex: 1;
+    background-color: #f5f5f5;
+    padding: 40px;
+    border-radius: 10px;
+    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.1);
+    max-width: 500px;
+    text-align: center;
+    height: auto;
+}
+
+.form-container {
+    width: 100%;
+    text-align: center;
+}
+
+input[type="file"] {
+    font-size: 18px;
+    padding: 15px;
+    width: 100%;
+    border: 2px solid #2980b9;
+    border-radius: 8px;
+    margin-bottom: 20px;
+    background-color: #f9f9f9;
+    transition: border-color 0.3s ease;
+}
+
+input[type="file"]:focus {
+    border-color: #3498db;
+}
+
+button {
+    font-size: 20px;
+    padding: 12px 25px;
+    background-color: #3498db;
+    color: #fff;
+    border: none;
+    border-radius: 8px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+    margin-bottom: 20px;
+}
+
+button:hover {
+    background-color: #2980b9;
+}
+
+h3 {
+    font-size: 24px;
+    margin-top: 20px;
+    color: #27ae60;
+    font-weight: bold;
+}
+
+/* Result Styling */
+#result {
+    font-size: 24px;
+    font-weight: bold;
+    color: #e74c3c;
+    transition: all 0.3s ease;
+}
+
+#result.real {
+    color: #2ecc71;
+}
+
+#result.fake {
+    color: #e74c3c;
+}
+
+/* Footer */
+footer {
+    background-color: #000;
+    color: #ecf0f1;
+    text-align: center;
+    padding: 15px 0;
+    font-size: 18px;
+    width: 100%;
+    position: relative;
+    margin-top: 20px;
+}
+
+footer p {
+    margin: 0;
+    font-family: 'Poppins', sans-serif;
+    font-size: 16px;
+}
+
+/* Prevent scroll and keep footer at the bottom */
+body {
+    display: flex;
+    flex-direction: column;
+    height: 100vh;
+}
+
+.container {
+    flex-grow: 1;
+    display: flex;
+    flex-direction: column;
+}
+
+footer {
+    position: sticky;
+    bottom: 0;
+    width: 100%;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .main-content {
+        flex-direction: column;
+        gap: 20px;
+    }
+
+    header h1 {
+        font-size: 32px;
+    }
+
+    .left-section, .right-section {
+        max-width: 100%;
+    }
+
+    h2 {
+        font-size: 26px;
+    }
+
+    p {
+        font-size: 16px;
+    }
+
+    footer {
+        font-size: 14px;
+    }
+}
+</style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Deep Fake Detection</h1>
+            <p class="sub-heading">Upload an image to detect if it is real or fake using AI-powered deep learning technology.</p>
+        </header>
+
+        <div class="main-content">
+            <div class="left-section">
+                <h2>About This Project</h2>
+                <p>This project uses machine learning models to detect whether an image is a <strong>Deep Fake</strong> or <strong>Real</strong>.</p>
+                <div class="feature-list">
+                    <ul>
+                        <li><strong>AI-powered:</strong> Uses advanced AI and neural networks to detect fake images.</li>
+                        <li><strong>Instant Results:</strong> Upload your image, and get the result within seconds.</li>
+                        <li><strong>High Accuracy:</strong> High detection accuracy for both real and deepfake images.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="right-section">
+                <div class="form-container">
+                    <h3>Upload Image</h3>
+                    <form action="/predict" method="POST" enctype="multipart/form-data" id="upload-form">
+                        <div class="file-input">
+                            <input type="file" name="image" accept="image/*" required>
+                        </div>
+                        <button type="submit">Predict</button>
+                    </form>
+                    <h3 id="result"></h3>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <footer>
+        <p>&copy; 2025 Deep Fake Detection | Developed by MITians | Pune</p>
+    </footer>
+
+    <script>
+        const form = document.querySelector('#upload-form');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const formData = new FormData(form);
+            const response = await fetch('/predict', {
+                method: 'POST',
+                body: formData
+            });
+            const data = await response.json();
+            const resultElement = document.getElementById('result');
+            
+            resultElement.classList.remove('real', 'fake');  // Remove previous classes
+            resultElement.classList.add(data.result === "Real" ? 'real' : 'fake');  // Add appropriate class
+            
+            resultElement.innerText = `Prediction: ${data.result}`;
+        };
+    </script>
+</body>
+</html>

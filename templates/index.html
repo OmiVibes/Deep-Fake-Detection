@@ -1,0 +1,444 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>DeepFake | AI-Powered Deepfake Detection</title>
+    <link href="https://fonts.googleapis.com/css2?family=Playfair+Display:wght@700&family=Poppins:wght@400;500;600&family=Montserrat:wght@600;700&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.0/css/all.min.css">
+    <style>
+        :root {
+            --primary: #7F5AF0;  /* Elegant purple */
+            --primary-dark: #6C4BD2;
+            --secondary: #FF7E5F;  /* Vibrant coral */
+            --accent: #2CB67D;  /* Fresh mint */
+            --dark: #16161A;  /* Deep navy */
+            --light: #FFFFFE;
+            --success: #4ADE80;
+            --danger: #F72585;
+            --text: #94A1B2;
+            --card-bg: rgba(255, 255, 255, 0.92);
+            --transition: all 0.4s cubic-bezier(0.25, 0.8, 0.25, 1);
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: 'Poppins', sans-serif;
+            background: linear-gradient(rgba(22, 22, 26, 0.85), rgba(22, 22, 26, 0.85)), 
+                        url('https://images.unsplash.com/photo-1620712943543-bcc4688e7485?ixlib=rb-4.0.3&ixid=M3wxMjA3fDB8MHxwaG90by1wYWdlfHx8fGVufDB8fHx8fA%3D%3D&auto=format&fit=crop&w=1200&q=80') no-repeat center/cover fixed;
+            color: var(--light);
+            min-height: 100vh;
+            line-height: 1.6;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            min-height: 100vh;
+        }
+
+        /* Header */
+        header {
+            margin: 80px 0 50px;
+            text-align: center;
+        }
+
+        h1 {
+            font-family: 'Playfair Display', serif;
+            font-size: 3.5rem;
+            background: linear-gradient(135deg, var(--primary), var(--secondary));
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            margin-bottom: 20px;
+            letter-spacing: -0.5px;
+            line-height: 1.2;
+        }
+
+        .sub-heading {
+            font-size: 1.2rem;
+            color: var(--text);
+            max-width: 700px;
+            margin: 0 auto;
+            line-height: 1.8;
+        }
+
+        /* Main Content */
+        .main-content {
+            display: flex;
+            justify-content: center;
+            gap: 40px;
+            margin-bottom: 60px;
+            flex-wrap: wrap;
+        }
+
+        /* Cards */
+        .left-section, .right-section {
+            flex: 1;
+            min-width: 350px;
+            background: var(--card-bg);
+            border-radius: 20px;
+            padding: 40px;
+            box-shadow: 0 20px 40px rgba(0, 0, 0, 0.2);
+            backdrop-filter: blur(8px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: var(--transition);
+            color: var(--dark);
+        }
+
+        .left-section:hover, .right-section:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 25px 50px rgba(0, 0, 0, 0.3);
+        }
+
+        h2 {
+            font-family: 'Playfair Display', serif;
+            font-size: 2.2rem;
+            color: var(--primary-dark);
+            margin-bottom: 25px;
+            position: relative;
+        }
+
+        h2::after {
+            content: '';
+            position: absolute;
+            bottom: -10px;
+            left: 0;
+            width: 60px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        p {
+            color: #4B5563;
+            margin-bottom: 25px;
+            line-height: 1.8;
+            font-size: 1.05rem;
+        }
+
+        .feature-list ul {
+            list-style: none;
+        }
+
+        .feature-list li {
+            margin-bottom: 20px;
+            padding-left: 40px;
+            position: relative;
+            color: #4B5563;
+            line-height: 1.7;
+        }
+
+        .feature-list li::before {
+            content: '';
+            position: absolute;
+            left: 0;
+            top: 5px;
+            width: 24px;
+            height: 24px;
+            background-color: var(--accent);
+            mask-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='white' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3E%3Cpolyline points='20 6 9 17 4 12'%3E%3C/polyline%3E%3C/svg%3E");
+            mask-repeat: no-repeat;
+            mask-position: center;
+            border-radius: 50%;
+        }
+
+        /* Upload Section */
+        h3 {
+            font-family: 'Playfair Display', serif;
+            font-size: 1.8rem;
+            color: var(--primary-dark);
+            margin-bottom: 30px;
+            text-align: center;
+            position: relative;
+        }
+
+        h3::after {
+            content: '';
+            position: absolute;
+            bottom: -12px;
+            left: 50%;
+            transform: translateX(-50%);
+            width: 80px;
+            height: 4px;
+            background: linear-gradient(to right, var(--primary), var(--secondary));
+            border-radius: 2px;
+        }
+
+        .file-input {
+            margin-bottom: 25px;
+        }
+
+        input[type="file"] {
+            width: 100%;
+            padding: 18px;
+            border: 2px dashed var(--primary);
+            border-radius: 14px;
+            background: rgba(127, 90, 240, 0.05);
+            transition: var(--transition);
+            font-size: 1rem;
+            color: #4B5563;
+        }
+
+        input[type="file"]:hover {
+            border-color: var(--primary-dark);
+            background: rgba(127, 90, 240, 0.1);
+        }
+
+        button {
+            width: 100%;
+            padding: 18px;
+            background: linear-gradient(135deg, var(--primary), var(--primary-dark));
+            color: white;
+            border: none;
+            border-radius: 12px;
+            font-family: 'Montserrat', sans-serif;
+            font-weight: 600;
+            font-size: 1.1rem;
+            cursor: pointer;
+            transition: var(--transition);
+            margin-top: 10px;
+            box-shadow: 0 8px 20px rgba(127, 90, 240, 0.3);
+            position: relative;
+            overflow: hidden;
+        }
+
+        button:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 12px 25px rgba(127, 90, 240, 0.4);
+        }
+
+        button::after {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(135deg, rgba(255, 255, 255, 0.2), transparent);
+            transform: translateX(-100%);
+            transition: transform 0.6s cubic-bezier(0.16, 1, 0.3, 1);
+        }
+
+        button:hover::after {
+            transform: translateX(100%);
+        }
+
+        /* Result */
+        #result {
+            font-size: 1.3rem;
+            font-weight: 600;
+            text-align: center;
+            margin-top: 25px;
+            padding: 18px;
+            border-radius: 12px;
+            display: none;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+        }
+
+        #result.real {
+            background: rgba(44, 182, 125, 0.15);
+            border-left: 4px solid var(--accent);
+            color: var(--accent);
+            display: flex;
+        }
+
+        #result.fake {
+            background: rgba(247, 37, 133, 0.15);
+            border-left: 4px solid var(--danger);
+            color: var(--danger);
+            display: flex;
+        }
+
+        /* Footer */
+        footer {
+            background: var(--dark);
+            color: white;
+            padding: 60px 0 40px;
+            margin-top: auto;
+            width: 100%;
+        }
+
+        .footer-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            gap: 30px;
+        }
+
+        .social-links {
+            display: flex;
+            gap: 25px;
+        }
+
+        .social-link {
+            color: white;
+            font-size: 1.5rem;
+            width: 55px;
+            height: 55px;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            background: rgba(255, 255, 255, 0.1);
+            transition: var(--transition);
+        }
+
+        .social-link:hover {
+            background: var(--primary);
+            transform: translateY(-5px) scale(1.1);
+            box-shadow: 0 10px 20px rgba(127, 90, 240, 0.3);
+        }
+
+        .copyright {
+            text-align: center;
+            color: rgba(255, 255, 255, 0.7);
+            font-size: 0.95rem;
+            margin-top: 20px;
+        }
+
+        /* Responsive */
+        @media (max-width: 1024px) {
+            h1 {
+                font-size: 3rem;
+            }
+        }
+
+        @media (max-width: 768px) {
+            h1 {
+                font-size: 2.5rem;
+            }
+            
+            .main-content {
+                flex-direction: column;
+                gap: 30px;
+            }
+            
+            .left-section, .right-section {
+                min-width: auto;
+            }
+
+            h2 {
+                font-size: 2rem;
+            }
+        }
+
+        @media (max-width: 480px) {
+            h1 {
+                font-size: 2.2rem;
+            }
+            
+            h2 {
+                font-size: 1.8rem;
+            }
+            
+            h3 {
+                font-size: 1.5rem;
+            }
+            
+            .social-links {
+                gap: 15px;
+            }
+            
+            .social-link {
+                width: 45px;
+                height: 45px;
+                font-size: 1.3rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Deep Fake Detection</h1>
+            <p class="sub-heading">Upload an image to detect if it is real or fake using AI-powered deep learning technology.</p>
+        </header>
+
+        <div class="main-content">
+            <div class="left-section">
+                <h2>About This Project</h2>
+                <p>This project uses machine learning models to detect whether an image is a <strong>Deep Fake</strong> or <strong>Real</strong>.</p>
+                <div class="feature-list">
+                    <ul>
+                        <li><strong>AI-powered:</strong> Uses advanced AI and neural networks to detect fake images.</li>
+                        <li><strong>Instant Results:</strong> Upload your image, and get the result within seconds.</li>
+                        <li><strong>High Accuracy:</strong> High detection accuracy for both real and deepfake images.</li>
+                    </ul>
+                </div>
+            </div>
+
+            <div class="right-section">
+                <div class="form-container">
+                    <h3>Upload Image</h3>
+                    <form action="/predict" method="POST" enctype="multipart/form-data" id="upload-form">
+                        <div class="file-input">
+                            <input type="file" name="image" accept="image/*" required>
+                        </div>
+                        <button type="submit">Analyze Image</button>
+                    </form>
+                    <div id="result"></div>
+                </div>
+            </div>
+        </div>
+
+        <footer>
+            <div class="footer-content">
+                <div class="social-links">
+                    <a href="#" class="social-link"><i class="fab fa-twitter"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-linkedin-in"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-instagram"></i></a>
+                    <a href="#" class="social-link"><i class="fab fa-github"></i></a>
+                </div>
+                <p class="copyright">&copy; 2025 Deep Fake Detection | Developed by MITians | Pune</p>
+            </div>
+        </footer>
+    </div>
+
+    <script>
+        const form = document.querySelector('#upload-form');
+        form.onsubmit = async (e) => {
+            e.preventDefault();
+            const resultElement = document.getElementById('result');
+            
+            // Show loading state
+            resultElement.innerText = "Analyzing...";
+            resultElement.style.display = "block";
+            resultElement.className = "";
+            
+            try {
+                const formData = new FormData(form);
+                const response = await fetch('/predict', {
+                    method: 'POST',
+                    body: formData
+                });
+                
+                if (!response.ok) throw new Error('Analysis failed');
+                
+                const data = await response.json();
+                
+                resultElement.classList.remove('real', 'fake');
+                resultElement.classList.add(data.result === "Real" ? 'real' : 'fake');
+                resultElement.innerText = `Prediction: ${data.result}`;
+                
+            } catch (error) {
+                resultElement.innerText = "Error analyzing image";
+                resultElement.style.color = "var(--danger)";
+                resultElement.style.background = "rgba(247, 37, 133, 0.1)";
+            }
+        };
+    </script>
+</body>
+</html>

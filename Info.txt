@@ -1,0 +1,74 @@
+Dataset sizes - Train: 542, Val: 421, Test: 490
+Class distribution - Train: [184 358], Val: [223 198], Test: [225 265]
+2025-04-01 22:27:02.376401: I tensorflow/core/platform/cpu_feature_guard.cc:210] This TensorFlow binary is optimized to use available CPU instructions in performance-critical operations.
+To enable the following instructions: AVX2 FMA, in other operations, rebuild TensorFlow with the appropriate compiler flags.
+Model: "sequential"
++--------------------------------------------------------------------------+
+| Layer (type)                    | Output Shape           |       Param # |
+|---------------------------------+------------------------+---------------|
+| mobilenetv2_1.00_224            | (None, 1280)           |     2,257,984 |
+| (Functional)                    |                        |               |
+|---------------------------------+------------------------+---------------|
+| dense (Dense)                   | (None, 256)            |       327,936 |
+|---------------------------------+------------------------+---------------|
+| batch_normalization             | (None, 256)            |         1,024 |
+| (BatchNormalization)            |                        |               |
+|---------------------------------+------------------------+---------------|
+| dropout (Dropout)               | (None, 256)            |             0 |
+|---------------------------------+------------------------+---------------|
+| dense_1 (Dense)                 | (None, 128)            |        32,896 |
+|---------------------------------+------------------------+---------------|
+| dropout_1 (Dropout)             | (None, 128)            |             0 |
+|---------------------------------+------------------------+---------------|
+| dense_2 (Dense)                 | (None, 1)              |           129 |
++--------------------------------------------------------------------------+
+ Total params: 2,619,969 (9.99 MB)
+ Trainable params: 361,473 (1.38 MB)
+ Non-trainable params: 2,258,496 (8.62 MB)
+
+Starting training...
+Class weights: {0: np.float64(1.4728260869565217), 1: np.float64(0.7569832402234636)}
+C:\Users\Om\AppData\Local\Programs\Python\Python312\Lib\site-packages\keras\src\trainers\data_adapters\py_dataset_adapter.py:121: UserWarning: Your `PyDataset` class should call `super().__init__(**kwargs)` in its constructor. `**kwargs` can include `workers`, `use_multiprocessing`, `max_queue_size`. Do not pass these arguments to `fit()`, as they will be ignored.
+  self._warn_if_super_not_called()
+Epoch 1/15
+
+Evaluating model...
+Test Accuracy: 79.18%
+Test Precision: 0.9015
+Test Recall: 0.6906
+Test AUC: 0.8973
+
+[1m 1/16[0m [32m=[0m[37m===================[0m [1m23s[0m 2s/step
+[1m 2/16[0m [32m==[0m[37m==================[0m [1m8s[0m 622ms/step
+[1m 3/16[0m [32m===[0m[37m=================[0m [1m8s[0m 624ms/step
+[1m 4/16[0m [32m=====[0m[37m===============[0m [1m7s[0m 623ms/step
+[1m 5/16[0m [32m======[0m[37m==============[0m [1m6s[0m 621ms/step
+[1m 6/16[0m [32m=======[0m[37m=============[0m [1m6s[0m 623ms/step
+[1m 7/16[0m [32m========[0m[37m============[0m [1m5s[0m 625ms/step
+[1m 8/16[0m [32m==========[0m[37m==========[0m [1m5s[0m 625ms/step
+[1m 9/16[0m [32m===========[0m[37m=========[0m [1m4s[0m 624ms/step
+[1m10/16[0m [32m============[0m[37m========[0m [1m3s[0m 623ms/step
+[1m11/16[0m [32m=============[0m[37m=======[0m [1m3s[0m 625ms/step
+[1m12/16[0m [32m===============[0m[37m=====[0m [1m2s[0m 626ms/step
+[1m13/16[0m [32m================[0m[37m====[0m [1m1s[0m 627ms/step
+[1m14/16[0m [32m=================[0m[37m===[0m [1m1s[0m 627ms/step
+[1m15/16[0m [32m==================[0m[37m==[0m [1m0s[0m 626ms/step
+[1m16/16[0m [32m====================[0m[37m[0m [1m0s[0m 651ms/step
+[1m16/16[0m [32m====================[0m[37m[0m [1m11s[0m 652ms/step
+
+Classification Report:
+              precision    recall  f1-score   support
+
+        Real       0.71      0.91      0.80       225
+        Fake       0.90      0.69      0.78       265
+
+    accuracy                           0.79       490
+   macro avg       0.81      0.80      0.79       490
+weighted avg       0.82      0.79      0.79       490
+
+
+Confusion Matrix:
+[[205  20]
+ [ 82 183]]
+WARNING:absl:You are saving your model as an HDF5 file via `model.save()` or `keras.saving.save_model(model)`. This file format is considered legacy. We recommend using instead the native Keras format, e.g. `model.save('my_model.keras')` or `keras.saving.save_model(model, 'my_model.keras')`. 
+Model saved successfully.
