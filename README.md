@@ -29,8 +29,13 @@ This project uses **MobileNetV2** (via transfer learning) to classify images as 
   - Normalize pixel values
   - Augment images with flipping, rotation, etc.
 
-⚠️ **Note**: Dataset is not included fully in GitHub due to size  
+⚠️ **Note**: The full dataset and trained model files (`.h5`) are **not included in this repository** to comply with GitHub file size limitations.
 
+🔗 You can find the dataset on [Kaggle – Real and Fake Face Detection](https://www.kaggle.com/datasets/cherngs/real-and-fake-face-detection)
+
+To test the project:
+- Use sample images already included
+- Or download a few from the Kaggle dataset above
 
 Place the folders in your project root:
 
@@ -97,8 +102,3 @@ Follow these steps to run the project locally:
 🌐 [GitHub – OmiVibes](https://github.com/OmiVibes)
 
 ---
-
-## Authors
-
-- [@octokatherine](https://www.github.com/octokatherine)
-
